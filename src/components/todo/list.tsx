@@ -1,16 +1,33 @@
-import React, { FC } from 'react'
+import React, { Dispatch, FC, SetStateAction } from 'react'
 
 import TodoItem from './item'
 import { Todo } from '../types'
 
 type Props = {
   todos: Todo[]
+  setTodos: Dispatch<SetStateAction<Todo[]>>
 }
 
-const TodoList: FC<Props> = ({ todos }) => {
+const TodoList: FC<Props> = ({ todos, setTodos }) => {
+  const updateTodo = (updatedIndex: number) => (title: string) => {
+    const updatedTodo: Todo = { title }
+    setTodos(
+      todos.map((todo, index) => (index === updatedIndex ? updatedTodo : todo)),
+    )
+  }
+
+  const removeTodo = (index: number) => () => {
+    setTodos((prevState) => prevState.splice(index, 1))
+  }
+
   const renderTodos = () => {
     return todos.map((todo, index) => (
-      <TodoItem key={`#todo-item-${index}`} todo={todo} />
+      <TodoItem
+        key={`#todo-item-${index}`}
+        todo={todo}
+        editTodo={updateTodo(index)}
+        removeTodo={removeTodo(index)}
+      />
     ))
   }
 

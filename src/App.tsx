@@ -22,7 +22,7 @@ const App: FC = () => {
       <form className="w-96 mt-9" onSubmit={handleSubmit}>
         <Input name="title" value={todoTitle} setValue={setTodoTitle} />
       </form>
-      <TodoList todos={todos} />
+      <TodoList todos={todos} setTodos={setTodos} />
     </div>
   )
 }
