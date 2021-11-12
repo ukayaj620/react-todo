@@ -1,15 +1,11 @@
 import React, { FC, FormEvent, useState } from 'react'
 
+import Input from './components/input'
 import { Todo } from './components/types'
 
 const App: FC = () => {
   const [todos, setTodos] = useState<Todo[]>([])
-  const [todoTitle, setTodoTitle] = useState('')
-
-  const handleInput = (e: FormEvent<HTMLInputElement>) => {
-    e.preventDefault()
-    setTodoTitle(e.currentTarget.value)
-  }
+  const [todoTitle, setTodoTitle] = useState<string>('')
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -29,12 +25,7 @@ const App: FC = () => {
   return (
     <div className="w-screen flex flex-col items-center">
       <form className="w-96 mt-9" onSubmit={handleSubmit}>
-        <input
-          className="w-5/6 border-2"
-          name="title"
-          value={todoTitle}
-          onChange={handleInput}
-        />
+        <Input name="title" value={todoTitle} setValue={setTodoTitle} />
       </form>
       <div className="w-96 mt-9 flex flex-col space-y-2">{renderTodos()}</div>
     </div>
