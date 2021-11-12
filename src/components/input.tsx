@@ -14,7 +14,7 @@ const Input: FC<Props> = ({ name, value, setValue }) => {
 
   return (
     <input
-      className="w-5/6 border-2 border-gray-400 px-3 py-2 rounded-lg outline-none focus:ring-4 focus:ring-gray-200"
+      className="w-full border-2 border-gray-400 px-3 py-2 rounded-lg outline-none focus:ring-4 focus:ring-gray-200"
       name={name}
       value={value}
       onChange={handleInput}
