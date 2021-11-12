@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC, FormEvent, useState } from 'react'
 
-function App() {
+import { Todo } from './components/types'
+
+const App: FC = () => {
+  const [todos, setTodos] = useState<Todo[]>([])
+  const [todoTitle, setTodoTitle] = useState('')
+
+  const handleInput = (e: FormEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    setTodoTitle(e.currentTarget.value)
+  }
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const todo: Todo = {
+      title: todoTitle,
+    }
+    setTodos((prevState) => [...prevState, todo])
+    setTodoTitle('')
+  }
+
+  const renderTodos = () => {
+    return todos.map((todo, index) => (
+      <div key={`#todo-${index}`}>{todo.title}</div>
+    ))
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="w-screen flex flex-col items-center">
+      <form className="w-96 mt-9" onSubmit={handleSubmit}>
+        <input
+          className="w-5/6 border-2"
+          name="title"
+          value={todoTitle}
+          onChange={handleInput}
+        />
+      </form>
+      <div className="w-96 mt-9 flex flex-col space-y-2">{renderTodos()}</div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
